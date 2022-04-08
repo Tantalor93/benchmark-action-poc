@@ -1,0 +1,10 @@
+name: continuous-benchmark
+on:
+  pull_request:
+jobs:
+  continuous-benchmark:
+    name: continuous-benchmark
+    runs-on: ubuntu-latest
+    steps:
+    - name: Continuous Benchmark
+      uses: benchmark-action/github-action-benchmark@v1.13.0
