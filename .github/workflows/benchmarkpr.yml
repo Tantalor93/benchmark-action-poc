@@ -32,3 +32,4 @@ jobs:
         # Workflow will fail when an alert happens
         fail-on-alert: true
         save-data-file: false
+        comment-always: true
