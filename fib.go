@@ -1,6 +1,7 @@
 package benchmark_action_poc
 
 func Fib(n int) int {
+	// test
 	if n <= 1 {
 		return n
 	}
