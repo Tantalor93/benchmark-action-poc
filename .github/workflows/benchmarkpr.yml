@@ -33,3 +33,4 @@ jobs:
         fail-on-alert: true
         save-data-file: false
         comment-always: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
