@@ -1,4 +1,4 @@
-name: Go Example
+name: Go PR benchmark
 on:
   pull_request:
 
