@@ -12,25 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: main
     - uses: actions/setup-go@v1
-    - name: Run benchmark for main
-      run: go test -bench=. ./... | tee output-main.txt
-    - name: Benchmark action for main
-      uses: benchmark-action/github-action-benchmark@v1
+    - name: Run benchmark
+      run: go test -bench=. ./... | tee output.txt
+    - name: Download previous benchmark data
+      uses: actions/cache@v1
       with:
-        # What benchmark tool the output.txt came from
-        tool: 'go'
-        # Where the output from the benchmark tool is stored
-        output-file-path: output-main.txt
-        # Where the previous data file is stored
-        external-data-json-path: benchmark-data.json
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v1
-    - name: Run benchmark for ref
-      run:  go test -bench=. ./... | tee output.txt
-    - name: Benchmark action for ref
+        path: ./cache
+        key: ${{ runner.os }}-benchmark
+    - name: Store benchmark result
       uses: benchmark-action/github-action-benchmark@v1
       with:
         # What benchmark tool the output.txt came from
@@ -38,6 +28,6 @@ jobs:
         # Where the output from the benchmark tool is stored
         output-file-path: output.txt
         # Where the previous data file is stored
-        external-data-json-path: benchmark-data.json
+        external-data-json-path: ./cache/benchmark-data.json
         # Workflow will fail when an alert happens
         fail-on-alert: true
