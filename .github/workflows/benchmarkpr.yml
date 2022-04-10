@@ -15,11 +15,14 @@ jobs:
     - uses: actions/setup-go@v1
     - name: Run benchmark
       run: go test -bench=. ./... | tee output.txt
-    - name: Download previous benchmark data
-      uses: actions/cache@v1
+    - name: Download artifact
+      uses: dawidd6/action-download-artifact@v2
       with:
-        path: ./cache
-        key: ${{ runner.os }}-benchmark
+        workflow: benchmark.yml
+        name: benchmark-data
+        branch: main
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        search_artifacts: true
     - name: Store benchmark result
       uses: benchmark-action/github-action-benchmark@v1
       with:
@@ -28,7 +31,7 @@ jobs:
         # Where the output from the benchmark tool is stored
         output-file-path: output.txt
         # Where the previous data file is stored
-        external-data-json-path: ./cache/benchmark-data.json
+        external-data-json-path: ./benchmark-data.json
         # Workflow will fail when an alert happens
         fail-on-alert: true
         save-data-file: false
