@@ -1,9 +1,12 @@
 package benchmark_action_poc
 
+import "time"
+
 func Fib(n int) int {
 	if n <= 1 {
 		return n
 	}
+	time.Sleep(50 * time.Millisecond)
 	return Fib(n-1) + Fib(n-2)
 }
 
